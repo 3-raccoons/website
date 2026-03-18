@@ -1,0 +1,197 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #222;
+    background: #f8f9fa;
+    line-height: 1.6;
+}
+
+a {
+    color: #4a90d9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.site-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.site-header h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+nav a {
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+nav a:hover {
+    color: #4a90d9;
+}
+
+.hero {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.hero h2 {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 0;
+}
+
+section {
+    margin-bottom: 2.5rem;
+}
+
+section h3 {
+    font-size: 1.3rem;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+}
+
+section p {
+    color: #444;
+    margin: 0 0 1rem;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.tier-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.tier-card .tier-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.tier-card .tier-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+}
+
+.tier-card .tier-price span {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #666;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    background: #4a90d9;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.cta-button:hover {
+    opacity: 0.9;
+    text-decoration: none;
+}
+
+.pricing-note {
+    text-align: center;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.policy h2 {
+    font-size: 1.6rem;
+    color: #1a1a1a;
+    margin: 0 0 1.5rem;
+}
+
+.policy h3 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin: 2rem 0 0.5rem;
+}
+
+.policy p,
+.policy ul {
+    color: #444;
+    margin: 0 0 1rem;
+}
+
+.policy ul {
+    padding-left: 1.5rem;
+}
+
+.policy li {
+    margin-bottom: 0.4rem;
+}
+
+.site-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.site-footer nav {
+    margin-bottom: 0.75rem;
+}
+
+.site-footer nav a {
+    margin: 0 0.75rem;
+    color: #777;
+}
+
+.site-footer nav a:hover {
+    color: #4a90d9;
+}
+
+@media (max-width: 700px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}
