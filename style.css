@@ -33,7 +33,7 @@ a:hover {
 }
 
 .site-logo img {
-    height: 48px;
+    height: 80px;
     width: auto;
 }
 
@@ -178,6 +178,108 @@ section p {
 
 .policy li {
     margin-bottom: 0.4rem;
+}
+
+/* Team page */
+
+.team-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.team-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.team-intro {
+    text-align: center;
+    color: #555;
+    max-width: 540px;
+    margin: 0 auto 3rem;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 640px) {
+    .team-grid { grid-template-columns: 1fr; }
+}
+
+.team-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #e8e8e8;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-card .role {
+    min-height: 4.5em;
+}
+
+.team-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 360px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.team-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.15rem;
+}
+
+.team-card .role {
+    font-size: 0.85rem;
+    color: #4a90d9;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.team-card p {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.65;
+    text-align: left;
+}
+
+.team-card .links {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.team-card .links a {
+    font-size: 0.8rem;
+    color: #4a90d9;
+    text-decoration: none;
+    border: 1px solid #d6e4f0;
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.team-card .links a:hover {
+    background: #eef4fb;
+    border-color: #4a90d9;
+    text-decoration: none;
 }
 
 .site-footer {
