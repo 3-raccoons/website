@@ -85,10 +85,17 @@ section p {
     margin: 0 0 1rem;
 }
 
+.pricing-trial {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #4a90d9;
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+
 .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    display: flex;
+    justify-content: center;
     margin: 1.5rem 0;
 }
 
@@ -96,27 +103,43 @@ section p {
     background: #fff;
     border: 1px solid #dee2e6;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 2rem;
     text-align: center;
+    max-width: 400px;
+    width: 100%;
 }
 
-.tier-card .tier-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0 0 0.25rem;
+.pricing-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-.tier-card .tier-price {
+.pricing-divider {
+    width: 1px;
+    height: 3rem;
+    background: #dee2e6;
+}
+
+.tier-price {
     font-size: 1.5rem;
     font-weight: 700;
     color: #1a1a1a;
-    margin: 0 0 0.5rem;
 }
 
-.tier-card .tier-price span {
+.tier-price span {
     font-size: 0.85rem;
     font-weight: 400;
     color: #666;
+}
+
+.pricing-savings {
+    font-size: 0.8rem;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 0.25rem;
 }
 
 .cta-button {
@@ -136,11 +159,6 @@ section p {
     text-decoration: none;
 }
 
-.pricing-note {
-    text-align: center;
-    color: #777;
-    font-size: 0.85rem;
-}
 
 .policy h2 {
     font-size: 1.6rem;
@@ -190,8 +208,3 @@ section p {
     color: #4a90d9;
 }
 
-@media (max-width: 700px) {
-    .pricing-grid {
-        grid-template-columns: 1fr;
-    }
-}
