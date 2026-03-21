@@ -64,6 +64,13 @@ nav a:hover {
     margin: 0;
 }
 
+.about-section {
+    text-align: center;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Screenshot showcase */
 
 .product-section {
@@ -71,6 +78,13 @@ nav a:hover {
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.product-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
 }
 
 .product-section h4 {
