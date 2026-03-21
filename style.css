@@ -66,11 +66,21 @@ nav a:hover {
 
 /* Screenshot showcase */
 
+.product-section {
+    text-align: center;
+}
+
+.product-section h4 {
+    font-size: 1.15rem;
+    color: #1a1a1a;
+    margin: 2rem 0 0.5rem;
+}
+
 .screenshot-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin-top: 1rem;
+    margin: 1rem auto 0;
     max-width: 720px;
 }
 
@@ -96,6 +106,7 @@ nav a:hover {
     font-size: 0.8rem;
     color: #666;
     line-height: 1.4;
+    text-align: left;
 }
 
 section {
