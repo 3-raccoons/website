@@ -61,7 +61,36 @@ nav a:hover {
 .hero p {
     font-size: 1.1rem;
     color: #555;
+    margin: 0 0 0.5rem;
+}
+
+/* Screenshot showcase */
+
+.screenshot-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.screenshot-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
     margin: 0;
+}
+
+.screenshot-card img {
+    width: 100%;
+    display: block;
+}
+
+.screenshot-card figcaption {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.5;
 }
 
 section {
@@ -151,6 +180,17 @@ section p {
 .cta-button:hover {
     opacity: 0.9;
     text-decoration: none;
+}
+
+.coming-soon {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    background: #e9ecef;
+    color: #555;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 1rem;
 }
 
 

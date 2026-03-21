@@ -12,7 +12,7 @@
     <header class="site-header">
         <a href="/" class="site-logo"><img src="logo.png" alt="3 Raccoons"></a>
         <nav>
-            <a href="team.html">Team</a>
+            <a href="#team">Team</a>
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
             <a href="refund.html">Refunds</a>
@@ -20,23 +20,36 @@
     </header>
 
     <div class="hero">
-        <h2>Building tools for sea kayakers</h2>
-        <p>Conditions at a glance, so you can focus on the paddle.</p>
+        <h2>Currents, tides, weather, and swell &mdash; all in one view</h2>
+        <p>Current Events brings together the data sea kayakers need to plan smarter trips.</p>
+        <span class="coming-soon">Coming Soon</span>
     </div>
 
-    <section>
-        <h3>About</h3>
-        <p>3 Raccoons LLC is a Washington State software company. We build <a href="https://current-events.app">Current Events</a>, a trip-planning app for sea kayakers.</p>
+    <section class="screenshot-section">
+        <figure class="screenshot-card">
+            <img src="locations_map.png" alt="Interactive location map in Current Events">
+            <figcaption>Select locations from an interactive map or browse by region, set your date range, and search.</figcaption>
+        </figure>
+
+        <figure class="screenshot-card">
+            <img src="search_results.png" alt="Search results table in Current Events">
+            <figcaption>Compare currents, tides, weather, and swell across locations in a single table.</figcaption>
+        </figure>
+
+        <figure class="screenshot-card">
+            <img src="advanced_search.png" alt="Advanced search filters in Current Events">
+            <figcaption>Narrow results by slack time, current speed, tide height, wind, swell, daylight, and more.</figcaption>
+        </figure>
+
+        <figure class="screenshot-card">
+            <img src="ts_graph.png" alt="Time-series chart in Current Events">
+            <figcaption>Drill into any location with time-series charts overlaying current, tide, and wind throughout the day.</figcaption>
+        </figure>
     </section>
 
-    <section>
-        <h3>Current Events</h3>
-        <p>Current Events brings tidal currents, tides, wind, swell, and marine weather into a single view. Search across locations, filter by conditions, and share trip plans with your paddling group.</p>
-    </section>
-
-    <section>
+    <section id="pricing">
         <h3>Pricing</h3>
-        <p class="pricing-trial">14-day free trial — no credit card required</p>
+        <p class="pricing-trial">14-day free trial &mdash; no credit card required</p>
         <div class="pricing-grid">
             <div class="tier-card">
                 <div class="pricing-options">
@@ -53,13 +66,63 @@
             </div>
         </div>
         <div style="text-align: center;">
-            <a href="https://current-events.app" class="cta-button">Visit Current Events</a>
+            <span class="coming-soon">Coming Soon</span>
+        </div>
+    </section>
+
+    <section id="team" class="team-section">
+        <h2>The 3 Raccoons Team</h2>
+        <p class="team-intro">Paddlers building for paddlers.</p>
+
+        <div class="team-grid">
+
+            <div class="team-card">
+                <img class="team-photo" src="graton.JPG" alt="Graton Gathright">
+                <h3>Graton Gathright</h3>
+                <div class="role">Product Vision &amp; Backend Engineering</div>
+                <p>
+                    Graton is an ACA Level 3 Coastal Kayaking Instructor and Body Boat Blade coach who thrives in tide races, surf zones, and rock gardens along Washington's coast and Vancouver Island. He shaped the product vision for Current Events and owns the backend engineering. He holds a PhD in Economics from UC San Diego and previously spent seven years as an applied scientist at Amazon and Haus.
+                </p>
+                <div class="links">
+                    <a href="https://www.linkedin.com/in/graton-gathright/" target="_blank">LinkedIn</a>
+                    <a href="https://www.bodyboatblade.com/coachgratongathright" target="_blank">Body Boat Blade</a>
+                    <a href="https://www.instagram.com/between.swims/" target="_blank">Instagram</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img class="team-photo" src="erika2.JPG" alt="Erika O'Leary">
+                <h3>Erika O'Leary</h3>
+                <div class="role">Business Strategy &amp; UX</div>
+                <p>
+                    Erika is an ACA Level 3 Coastal Kayaking Instructor and Body Boat Blade coach who has explored much of Puget Sound and the Strait of Juan de Fuca, and leads the weekly Tuesday Skills Practice series in Kitsap. At 3 Raccoons, she guides business strategy and shapes the user experience. She is also a practicing chiropractor in Bremerton, Washington.
+                </p>
+                <div class="links">
+                    <a href="https://www.bodyboatblade.com/coacherikaoleary" target="_blank">Body Boat Blade</a>
+                    <a href="https://www.olympicfamilychiropractic.com/" target="_blank">Olympic Family Chiropractic</a>
+                    <a href="https://www.instagram.com/erika_oh_kayaking/" target="_blank">Instagram</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img class="team-photo" src="asger.jpg" alt="Asger Pjetursson">
+                <h3>Asger Pjetursson</h3>
+                <div class="role">Product Design &amp; Frontend Engineering</div>
+                <p>
+                    Asger is a Paddle Canada Level 2 Instructor and lifelong paddler from Denmark who has guided sea kayak expeditions in Antarctica. He leads product design and frontend engineering for 3 Raccoons. He holds a BA in Philosophy from Aarhus University, is completing an MS in Software Design at ITU Copenhagen, and previously managed BestCoast Outfitters, a kayak shop in Victoria, BC.
+                </p>
+                <div class="links">
+                    <a href="https://www.linkedin.com/in/apjetursson/" target="_blank">LinkedIn</a>
+                    <a href="https://www.instagram.com/asgerpjetursson/" target="_blank">Instagram</a>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <footer class="site-footer">
         <nav>
-            <a href="team.html">Team</a>
+            <a href="#team">Team</a>
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
             <a href="refund.html">Refunds</a>
