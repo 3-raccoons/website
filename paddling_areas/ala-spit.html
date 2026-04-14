@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ala Spit — Symposium 2026</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --color-primary: #3e576d;
+    --color-fg: #222;
+    --color-muted: #555;
+    --color-faint: #777;
+    --color-ink: #1a1a1a;
+    --color-canvas: #f8f9fa;
+    --color-surface: #fff;
+    --color-surface-alt: #fafbfc;
+    --color-line: #dee2e6;
+    --color-line-row: #eee;
+    --color-warn-bg: #fef3c7;
+    --color-warn-border: #fbbf24;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --text-xs: 0.75rem;
+    --text-sm: 0.85rem;
+    --text-base: 0.95rem;
+    --text-title: 1.25rem;
+    --tracking-label: 0.04em;
+  }
+
+  @page { size: letter; margin: 0.5in; }
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-canvas);
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--color-fg);
+    line-height: 1.5;
+    font-size: var(--text-base);
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media print {
+    html, body { background: white; }
+    .page { margin: 0; max-width: none; padding: 0; gap: 0.75rem; }
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+  }
+
+  .breadcrumb {
+    font-size: var(--text-xs);
+    color: var(--color-faint);
+    padding: 0 0.25rem;
+  }
+
+  .title-card { padding: 1.25rem 1.5rem; }
+  .title-card .launch-label {
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+  .title-card h1 {
+    margin: 0 0 0.15rem;
+    font-size: var(--text-title);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+  }
+  .title-card .subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-faint);
+  }
+
+  .launch-name {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .launch-prose {
+    margin-top: 1rem;
+  }
+
+  .glance {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line-row);
+  }
+  .glance > div {
+    padding: 0 1rem;
+    border-right: 1px solid var(--color-line-row);
+  }
+  .glance > div:first-child { padding-left: 0; }
+  .glance > div:last-child { padding-right: 0; border-right: none; }
+  .glance .label {
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-muted);
+    margin-bottom: 0.2rem;
+  }
+  .glance .value {
+    font-size: var(--text-base);
+    color: var(--color-fg);
+    font-weight: 500;
+  }
+
+  .section-label {
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .prose { font-size: var(--text-base); line-height: 1.5; }
+  .prose p { margin: 0 0 0.5rem; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .map-wrap {
+    position: relative;
+  }
+  #map {
+    height: 6in;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line);
+  }
+
+  /* Conditions card — two columns: tide + one current */
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1.5rem;
+  }
+  .conditions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-sm);
+  }
+  .conditions-table th {
+    text-align: left;
+    padding: 0.4rem 0.6rem;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-muted);
+    border-bottom: 2px solid var(--color-line);
+  }
+  .conditions-table td {
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--color-line-row);
+    color: var(--color-fg);
+  }
+  .conditions-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .source-line {
+    margin-top: 0.4rem;
+    font-size: var(--text-xs);
+    color: var(--color-faint);
+    font-style: italic;
+  }
+
+  /* Spots grid — Play Spots and Lunch Spots cards side by side */
+  .spots-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .lunch-table,
+  .play-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-sm);
+  }
+  .lunch-table th,
+  .play-table th {
+    text-align: left;
+    padding: 0.4rem 0.6rem;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-muted);
+    border-bottom: 2px solid var(--color-line);
+  }
+  .lunch-table td,
+  .play-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--color-line-row);
+    color: var(--color-fg);
+    vertical-align: middle;
+  }
+  .lunch-table tbody tr:last-child td,
+  .play-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .lunch-table td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lunch-table .num-badge {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .play-table td:first-child {
+    width: 36px;
+    text-align: center;
+    padding: 0.3rem 0.3rem;
+  }
+  .play-table .num-badge-play {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .play-table td.pending {
+    color: var(--color-faint);
+  }
+
+  .num-badge {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.6rem;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    flex-wrap: wrap;
+  }
+  .legend .item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .legend-svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .marker-launch, .marker-play, .marker-lunch {
+    background: transparent;
+    border: none;
+  }
+  .marker-launch svg, .marker-play svg, .marker-lunch svg {
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+  }
+
+  .sources {
+    font-size: var(--text-xs);
+    color: var(--color-faint);
+    line-height: 1.6;
+  }
+  .sources a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  .sources a:hover { text-decoration: underline; }
+  .sources .sep { color: var(--color-line); margin: 0 0.4rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="breadcrumb">Salish Sea Kayaking Symposium · May 1–3, 2026 · Paddling Areas</div>
+
+  <div class="card title-card">
+    <div class="launch-label">Paddling Area</div>
+    <h1>Ala Spit</h1>
+    <div class="subtitle">Ala Spit County Park · NE Whidbey Island</div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Launch</div>
+    <div class="launch-name">Ala Spit County Park</div>
+
+    <div class="glance">
+      <div>
+        <div class="label">Dates</div>
+        <div class="value">May 1–3</div>
+      </div>
+      <div>
+        <div class="label">Groups</div>
+        <div class="value">1</div>
+      </div>
+      <div>
+        <div class="label">Restroom</div>
+        <div class="value">Yes</div>
+      </div>
+      <div>
+        <div class="label">Fee</div>
+        <div class="value">Free</div>
+      </div>
+    </div>
+
+    <div class="prose launch-prose">
+      <p>Island County park at the NE corner of Whidbey Island, south of Hope Island. Gravel launch on the protected (west) side of the spit. Restrooms, small gravel lot. Free access. Good staging for trips into Skagit Bay, Hope and Skagit Islands, or east to Deception Pass via Hoypus Point.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Conditions</div>
+    <div class="conditions-grid">
+      <div>
+        <div class="section-label" style="margin-bottom: 0.4rem;">Tide · Ala Spit</div>
+        <table class="conditions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Low</th>
+              <th>High</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>May 1</td>
+              <td>−0.9 ft @ 12:02</td>
+              <td>9.9 ft @ 19:03</td>
+            </tr>
+            <tr>
+              <td>May 2</td>
+              <td>−1.3 ft @ 12:31</td>
+              <td>10.2 ft @ 19:43</td>
+            </tr>
+            <tr>
+              <td>May 3</td>
+              <td>−1.4 ft @ 13:03</td>
+              <td>10.3 ft @ 20:20</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="source-line">NOAA CO-OPS · 9447993</div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom: 0.4rem;">Current · Skagit Bay Channel</div>
+        <table class="conditions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Phase</th>
+              <th>Slack</th>
+              <th>Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>May 1</td>
+              <td>Ebb</td>
+              <td>09:57</td>
+              <td>2.3 kt @ 12:46</td>
+            </tr>
+            <tr>
+              <td>May 2</td>
+              <td>Ebb</td>
+              <td>10:36</td>
+              <td>2.3 kt @ 13:20</td>
+            </tr>
+            <tr>
+              <td>May 3</td>
+              <td>Ebb</td>
+              <td>11:12</td>
+              <td>2.2 kt @ 13:55</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="source-line">NOAA CO-OPS · PUG1628_13 · ebb flows south</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card map-card">
+    <div class="section-label">Map</div>
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div class="legend">
+        <div class="item">
+          <svg class="legend-svg" viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" fill="#3e576d" stroke="#fff" stroke-width="2"/></svg>
+          Launch
+        </div>
+        <div class="item">
+          <svg class="legend-svg" viewBox="0 0 30 30"><polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/></svg>
+          Play Spot
+        </div>
+        <div class="item">
+          <svg class="legend-svg" viewBox="0 0 26 26"><rect x="2" y="2" width="22" height="22" fill="#2d8659" stroke="#fff" stroke-width="2" rx="2"/></svg>
+          Lunch Spot
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spots-grid">
+    <div class="card">
+      <div class="section-label">Play Spots</div>
+      <table class="play-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Spot</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><svg class="num-badge num-badge-play" viewBox="0 0 30 30"><polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/><text x="15" y="16" text-anchor="middle" dominant-baseline="central" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">1</text></svg></td>
+            <td>Ala Spit</td>
+            <td class="pending">—</td>
+          </tr>
+          <tr>
+            <td><svg class="num-badge num-badge-play" viewBox="0 0 30 30"><polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/><text x="15" y="16" text-anchor="middle" dominant-baseline="central" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">2</text></svg></td>
+            <td>Hope Island</td>
+            <td class="pending">—</td>
+          </tr>
+          <tr>
+            <td><svg class="num-badge num-badge-play" viewBox="0 0 30 30"><polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/><text x="15" y="16" text-anchor="middle" dominant-baseline="central" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">3</text></svg></td>
+            <td>Hoypus Point</td>
+            <td class="pending">—</td>
+          </tr>
+          <tr>
+            <td><svg class="num-badge num-badge-play" viewBox="0 0 30 30"><polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3" fill="#8e44ad" stroke="#fff" stroke-width="1.5"/><text x="15" y="16" text-anchor="middle" dominant-baseline="central" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">4</text></svg></td>
+            <td>Skagit Island</td>
+            <td class="pending">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Lunch Spots</div>
+      <table class="lunch-table">
+        <thead>
+          <tr>
+            <th>Spot</th>
+            <th>Restroom</th>
+            <th>Groups</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><svg class="num-badge" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#2d8659" stroke="#fff" stroke-width="1.5" rx="2"/><text x="12" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">1</text></svg>Ala Spit</td>
+            <td>Yes</td>
+            <td>1+</td>
+          </tr>
+          <tr>
+            <td><svg class="num-badge" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#2d8659" stroke="#fff" stroke-width="1.5" rx="2"/><text x="12" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">2</text></svg>Hope Island</td>
+            <td>Yes</td>
+            <td>1+</td>
+          </tr>
+          <tr>
+            <td><svg class="num-badge" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#2d8659" stroke="#fff" stroke-width="1.5" rx="2"/><text x="12" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#fff">3</text></svg>Kiket Island</td>
+            <td>Yes</td>
+            <td>2+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Place data — coordinates from Ala_Spit.kml
+    // Numbers follow alphabetical order within each type
+    const places = [
+      // Launch
+      { name: "Ala Spit County Park", type: "launch", num: 1, lat: 48.3930805, lng: -122.5872212 },
+
+      // Play Spots (alphabetical: Ala Spit, Hope Island, Hoypus Point, Skagit Island)
+      { name: "Ala Spit", type: "play", num: 1, lat: 48.3980083, lng: -122.5851995 },
+      { name: "Hope Island", type: "play", num: 2, lat: 48.3956575, lng: -122.5789768 },
+      { name: "Hoypus Point", type: "play", num: 3, lat: 48.4112615, lng: -122.6058045 },
+      { name: "Skagit Island", type: "play", num: 4, lat: 48.41525, lng: -122.577466 },
+
+      // Lunch Spots (alphabetical: Ala Spit, Hope Island, Kiket Island)
+      { name: "Ala Spit", type: "lunch", num: 1, lat: 48.3980083, lng: -122.5851995, offset: [0.00022, 0.00028] },
+      { name: "Hope Island", type: "lunch", num: 2, lat: 48.40040, lng: -122.57163 },
+      { name: "Kiket Island", type: "lunch", num: 3, lat: 48.4173651, lng: -122.5708757 },
+    ];
+
+    function initMap() {
+      if (typeof L === 'undefined') {
+        document.getElementById('map').innerHTML =
+          '<div style="padding:1rem;color:#555;font-size:0.85rem;">Map library failed to load. Check your connection.</div>';
+        return;
+      }
+
+      function makeIcon(type, num) {
+        let html, size, anchor;
+        if (type === 'launch') {
+          size = 28;
+          anchor = [14, 14];
+          html = `<svg width="28" height="28" viewBox="0 0 28 28">
+            <circle cx="14" cy="14" r="12" fill="#3e576d" stroke="#fff" stroke-width="2"/>
+            <text x="14" y="14" text-anchor="middle" dominant-baseline="central"
+              font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff">${num}</text>
+          </svg>`;
+        } else if (type === 'play') {
+          size = 30;
+          anchor = [15, 15];
+          html = `<svg width="30" height="30" viewBox="0 0 30 30">
+            <polygon points="15,2 18.5,11.3 28.5,11.8 20.6,17.8 23.2,27.5 15,22 6.8,27.5 9.4,17.8 1.5,11.8 11.5,11.3"
+              fill="#8e44ad" stroke="#fff" stroke-width="1.5"/>
+            <text x="15" y="17" text-anchor="middle" dominant-baseline="central"
+              font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#fff">${num}</text>
+          </svg>`;
+        } else {
+          size = 26;
+          anchor = [13, 13];
+          html = `<svg width="26" height="26" viewBox="0 0 26 26">
+            <rect x="2" y="2" width="22" height="22" fill="#2d8659" stroke="#fff" stroke-width="2" rx="2"/>
+            <text x="13" y="13" text-anchor="middle" dominant-baseline="central"
+              font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#fff">${num}</text>
+          </svg>`;
+        }
+        return L.divIcon({
+          className: 'marker-' + type,
+          html: html,
+          iconSize: [size, size],
+          iconAnchor: anchor,
+        });
+      }
+
+      const map = L.map('map', {
+        zoomControl: true,
+        attributionControl: true,
+      });
+
+      L.tileLayer.wms('https://gis.charttools.noaa.gov/arcgis/rest/services/MCS/ENCOnline/MapServer/exts/MaritimeChartService/WMSServer', {
+        layers: '0,1,2,3,4,5,6',
+        format: 'image/png',
+        transparent: true,
+        version: '1.3.0',
+        attribution: 'NOAA ENC · Office of Coast Survey',
+        maxZoom: 18,
+      }).addTo(map);
+
+      const bounds = L.latLngBounds([]);
+      const typeLabel = { launch: 'L', play: 'P', lunch: 'M' };
+      places.forEach(p => {
+        const displayLat = p.offset ? p.lat + p.offset[0] : p.lat;
+        const displayLng = p.offset ? p.lng + p.offset[1] : p.lng;
+
+        if (p.offset) {
+          L.polyline(
+            [[p.lat, p.lng], [displayLat, displayLng]],
+            { color: '#555', weight: 1, opacity: 0.7, interactive: false }
+          ).addTo(map);
+          L.circleMarker([p.lat, p.lng], {
+            radius: 2,
+            color: '#555',
+            fillColor: '#555',
+            fillOpacity: 1,
+            weight: 0,
+            interactive: false,
+          }).addTo(map);
+        }
+
+        const marker = L.marker([displayLat, displayLng], { icon: makeIcon(p.type, p.num) }).addTo(map);
+        marker.bindPopup(`<strong>${typeLabel[p.type]}${p.num} · ${p.name}</strong>`);
+        bounds.extend([p.lat, p.lng]);
+        bounds.extend([displayLat, displayLng]);
+      });
+
+      map.fitBounds(bounds, { padding: [20, 20] });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMap);
+    } else {
+      initMap();
+    }
+  </script>
+
+  <div class="card">
+    <div class="section-label">Sources</div>
+    <div class="sources">
+      <a href="https://www.islandcountywa.gov/publicworks/parks">Island County Parks</a>
+      <span class="sep">·</span>
+      <a href="https://www.wwta.org/">Washington Water Trails Association</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
