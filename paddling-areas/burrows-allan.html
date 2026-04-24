@@ -58,15 +58,6 @@
     .area-nav { display: none; }
   }
 
-  @media (max-width: 640px) {
-    .glance { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-    .glance > div { border-right: none; padding: 0; }
-    .conditions-grid { grid-template-columns: 1fr; }
-    .spots-grid { grid-template-columns: 1fr; }
-    .conditions-table { font-size: var(--text-xs); }
-    .conditions-table th, .conditions-table td { padding: 0.3rem 0.35rem; }
-  }
-
   .card {
     background: var(--color-surface);
     border: 1px solid var(--color-line);
@@ -356,6 +347,15 @@
   }
   .sources a:hover { text-decoration: underline; }
   .sources .sep { color: var(--color-line); margin: 0 0.4rem; }
+
+  @media (max-width: 640px) {
+    .glance { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .glance > div { border-right: none; padding: 0; }
+    .conditions-grid { grid-template-columns: 1fr; overflow-x: auto; }
+    .spots-grid { grid-template-columns: 1fr; }
+    .conditions-table { font-size: var(--text-xs); }
+    .conditions-table th, .conditions-table td { padding: 0.3rem 0.35rem; }
+  }
 </style>
 </head>
 <body>
