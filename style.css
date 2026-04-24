@@ -148,15 +148,26 @@ nav a:hover {
     margin-top: 0.15rem;
 }
 
+.product-cta-sponsor {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bbb-logo {
+    height: 60px;
+    vertical-align: middle;
+}
+
 .product-cta-launch {
     font-size: 0.8rem;
     font-weight: 600;
     color: #3e576d;
-    background: #edf1f5;
-    padding: 0.35rem 0.85rem;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
+    margin-top: 0.2rem;
 }
 
 @media (max-width: 640px) {
